@@ -3,13 +3,11 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { handleSearch } from "../../store/slices/movieSlice";
 import Searchbar from "./Searchbar";
 import { useState } from "react";
+import MoviesList from "./MoviesList";
 
 const MovieContainer = () => {
   const dispatch = useAppDispatch();
-  const testSelector = useAppSelector((state) => state.movie.searchMovies);
   const isLoading = useAppSelector((state) => state.movie.loading);
-
-  console.log("test: ", testSelector);
 
   return (
     <Container
@@ -28,11 +26,7 @@ const MovieContainer = () => {
 
       <Searchbar />
 
-      {/* <button onClick={() => dispatch(handleSearch())}>
-        test search data redux
-      </button> */}
-
-      {/* {isLoading === "pending" && "loading"} */}
+      <MoviesList />
     </Container>
   );
 };

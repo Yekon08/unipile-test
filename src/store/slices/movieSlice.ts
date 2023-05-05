@@ -1,34 +1,22 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { movieReducer } from "../reducers/movieReducer";
 import { Omdb } from "../../components/movie/Omdb";
+import {
+  GlobalStateInterface,
+  SearchMoviesInterface,
+} from "../../interfaces/store";
 
-export interface StateType {
-  loading: string;
+export const initialState: GlobalStateInterface = {
+  loading: false,
   searchMovies: {
-    Response: string;
-    Search: {
-      Poster: string;
-      Title: string;
-      Type: string;
-      Year: string;
-      imdbID: string;
-    }[];
-    totalResults: string;
-  };
-  error: string;
-}
-
-export const initialState: StateType = {
-  loading: "idle",
-  searchMovies: {
-    Response: "false",
+    Response: "False",
     Search: [],
     totalResults: "0",
   },
   error: "",
 };
 
-export const handleSearch = createAsyncThunk(
+export const handleSearch = createAsyncThunk<SearchMoviesInterface, string>(
   "movie/handleSearch",
   async (searchText: string) => {
     const omdb = new Omdb();
@@ -43,15 +31,16 @@ export const movieSlice = createSlice({
   reducers: movieReducer,
   extraReducers: (builder) => {
     builder.addCase(handleSearch.pending, (state) => {
-      state.loading = "pending";
+      state.loading = true;
     });
-    builder.addCase(handleSearch.fulfilled, (state, action: any) => {
-      state.loading = "idle";
+    builder.addCase(handleSearch.fulfilled, (state, action) => {
+      console.log("test: ", action);
+      state.loading = false;
       state.searchMovies = action.payload;
-      state.error = "";
+      state.error = action.payload.Error;
     });
-    builder.addCase(handleSearch.rejected, (state, action: any) => {
-      state.loading = "idle";
+    builder.addCase(handleSearch.rejected, (state, action) => {
+      state.loading = false;
       state.searchMovies = {
         Response: "false",
         Search: [],

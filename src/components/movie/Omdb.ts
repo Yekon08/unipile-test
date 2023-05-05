@@ -1,6 +1,10 @@
+import { SearchMoviesInterface } from "../../interfaces/store";
+
 export class Omdb {
   async searchMovies(movie: string) {
-    const fetchData = async (movie: string) => {
+    const fetchData = async (
+      movie: string
+    ): Promise<SearchMoviesInterface | any> => {
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=23aaa32&s=${movie}`
       );
@@ -10,6 +14,8 @@ export class Omdb {
         return response.json();
       }
     };
-    return await fetchData(movie);
+
+    const data = await fetchData(movie);
+    return data;
   }
 }
