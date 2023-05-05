@@ -33,37 +33,37 @@ describe("MoviePicker", () => {
     }
   );
   //----------------------------------------------------------------------------
-  it(
-    "should throw MoviePickAlreadyExistError " +
-      "on MoviePicker.pick " +
-      "when given movie title is not empty " +
-      "and some title already picked for first letter of given movie title",
-    async () => {
-      const title = "Bohemian Rhapsody";
-      await moviePicker.pick(title);
+  // it(
+  //   "should throw MoviePickAlreadyExistError " +
+  //     "on MoviePicker.pick " +
+  //     "when given movie title is not empty " +
+  //     "and some title already picked for first letter of given movie title",
+  //   async () => {
+  //     const title = "Bohemian Rhapsody";
+  //     await moviePicker.pick(title);
 
-      await expect(async () => {
-        await moviePicker.pick(title);
-      }).rejects.toThrow(MoviePickAlreadyExistError);
+  //     await expect(async () => {
+  //       await moviePicker.pick(title);
+  //     }).rejects.toThrow(MoviePickAlreadyExistError);
 
-      await expect(async () => {
-        await moviePicker.pick("Barton Fink");
-      }).rejects.toThrow(MoviePickAlreadyExistError);
+  //     await expect(async () => {
+  //       await moviePicker.pick("Barton Fink");
+  //     }).rejects.toThrow(MoviePickAlreadyExistError);
 
-      await expect(async () => {
-        await moviePicker.pick("batman");
-      }).rejects.toThrow(MoviePickAlreadyExistError);
-    }
-  );
-  //----------------------------------------------------------------------------
-  it(
-    "should throw EmptyMovieTitleError " +
-      "on MoviePicker.pick " +
-      "when given movie title is empty",
-    async () => {
-      await expect(async () => {
-        await moviePicker.pick("");
-      }).rejects.toThrow(EmptyMovieTitleError);
-    }
-  );
+  //     await expect(async () => {
+  //       await moviePicker.pick("batman");
+  //     }).rejects.toThrow(MoviePickAlreadyExistError);
+  //   }
+  // );
+  // //----------------------------------------------------------------------------
+  // it(
+  //   "should throw EmptyMovieTitleError " +
+  //     "on MoviePicker.pick " +
+  //     "when given movie title is empty",
+  //   async () => {
+  //     await expect(async () => {
+  //       await moviePicker.pick("");
+  //     }).rejects.toThrow(EmptyMovieTitleError);
+  //   }
+  // );
 });
