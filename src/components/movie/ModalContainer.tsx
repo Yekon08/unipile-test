@@ -31,7 +31,7 @@ const ModalContainer = () => {
   if (loading) {
     return (
       <Box sx={style}>
-        <Box sx={{ display: "flex", marginTop: "35px" }}>
+        <Box sx={{ display: "flex" }}>
           <CircularProgress />
         </Box>
       </Box>
