@@ -1,12 +1,14 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { MovieInterface } from "../../interfaces/movies";
+import { useAppDispatch } from "../../hooks";
+import { setModalId, setModalStatus } from "../../store/slices/movieSlice";
 
 interface Props {
   movie: MovieInterface;
 }
 
 const MovieCard = ({ movie }: Props) => {
-  console.log("movie: ", movie);
+  const dispatch = useAppDispatch();
   return (
     <Card
       sx={{
@@ -16,6 +18,10 @@ const MovieCard = ({ movie }: Props) => {
         ":hover": {
           transform: "scale(1.03)",
         },
+      }}
+      onClick={() => {
+        dispatch(setModalStatus(true));
+        dispatch(setModalId(movie.imdbID));
       }}
     >
       <CardMedia

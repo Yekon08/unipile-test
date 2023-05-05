@@ -5,6 +5,7 @@ import {
   GlobalStateInterface,
   SearchMoviesInterface,
 } from "../../interfaces/store";
+import { MovieDetailsInterface, MovieInterface } from "../../interfaces/movies";
 
 export const initialState: GlobalStateInterface = {
   loading: false,
@@ -14,6 +15,11 @@ export const initialState: GlobalStateInterface = {
     totalResults: "0",
   },
   error: "",
+  modal: false,
+  modalId: "",
+  modalError: "",
+  modalLoading: false,
+  movieData: {} as MovieDetailsInterface,
 };
 
 export const handleSearch = createAsyncThunk<SearchMoviesInterface, string>(
@@ -21,6 +27,15 @@ export const handleSearch = createAsyncThunk<SearchMoviesInterface, string>(
   async (searchText: string) => {
     const omdb = new Omdb();
     const data = await omdb.searchMovies(searchText);
+    return data;
+  }
+);
+
+export const handleSearchId = createAsyncThunk<MovieDetailsInterface, string>(
+  "movie/handleSearchId",
+  async (id: string) => {
+    const omdb = new Omdb();
+    const data = await omdb.searchMovieId(id);
     return data;
   }
 );
@@ -47,7 +62,20 @@ export const movieSlice = createSlice({
       };
       state.error = action.error.message;
     });
+    builder.addCase(handleSearchId.pending, (state) => {
+      state.modalLoading = true;
+    });
+    builder.addCase(handleSearchId.fulfilled, (state, action) => {
+      state.modalLoading = false;
+      state.movieData = action.payload;
+      state.error = action.payload.Error;
+    });
+    builder.addCase(handleSearchId.rejected, (state, action) => {
+      state.modalLoading = false;
+      state.movieData = {} as MovieDetailsInterface;
+      state.error = action.error.message;
+    });
   },
 });
 
-export const { moviesLoading } = movieSlice.actions;
+export const { setModalStatus, setModalId } = movieSlice.actions;

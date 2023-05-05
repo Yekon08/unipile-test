@@ -1,4 +1,4 @@
-import { MovieInterface } from "./movies";
+import { MovieDetailsInterface, MovieInterface } from "./movies";
 
 export interface SearchMoviesInterface {
   Search: MovieInterface[];
@@ -11,4 +11,9 @@ export interface GlobalStateInterface {
   loading: boolean;
   searchMovies: SearchMoviesInterface;
   error: string | undefined;
+  modal: boolean;
+  modalId: string;
+  modalError: string | undefined;
+  modalLoading: boolean;
+  movieData: MovieDetailsInterface;
 }

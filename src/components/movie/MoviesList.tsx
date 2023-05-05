@@ -1,6 +1,7 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Modal, Typography } from "@mui/material";
 import { useAppSelector } from "../../hooks";
 import MovieCard from "./MovieCard";
+import ModalContainer from "./ModalContainer";
 
 const MoviesList = () => {
   const movies = useAppSelector((state) => state.movie.searchMovies);
@@ -24,13 +25,23 @@ const MoviesList = () => {
   }
 
   return (
-    <Box
-      sx={{ marginTop: "35px", display: "flex", flexWrap: "wrap", gap: "20px" }}
-    >
-      {movies.Search.map((movie) => (
-        <MovieCard movie={movie} />
-      ))}
-    </Box>
+    <>
+      <Box
+        sx={{
+          marginTop: "35px",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "20px",
+          justifyContent: "center",
+        }}
+      >
+        {movies.Search.map((movie) => (
+          <MovieCard key={movie.imdbID} movie={movie} />
+        ))}
+      </Box>
+
+      <ModalContainer />
+    </>
   );
 };
 
