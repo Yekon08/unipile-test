@@ -1,6 +1,8 @@
-import { Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { handleSearch } from "../../store/slices/movieSlice";
+import Searchbar from "./Searchbar";
+import { useState } from "react";
 
 const MovieContainer = () => {
   const dispatch = useAppDispatch();
@@ -10,15 +12,28 @@ const MovieContainer = () => {
   console.log("test: ", testSelector);
 
   return (
-    <div>
-      <Typography variant="h1">Hello World !</Typography>
+    <Container
+      maxWidth="lg"
+      disableGutters
+      sx={{
+        marginTop: "100px",
+        textAlign: "center",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
+      <Typography variant="h3">Search for movies...</Typography>
 
-      <button onClick={() => dispatch(handleSearch())}>
+      <Searchbar />
+
+      {/* <button onClick={() => dispatch(handleSearch())}>
         test search data redux
-      </button>
+      </button> */}
 
-      {isLoading === "pending" && "loading"}
-    </div>
+      {/* {isLoading === "pending" && "loading"} */}
+    </Container>
   );
 };
 

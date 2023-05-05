@@ -28,12 +28,14 @@ export const initialState: StateType = {
   error: "",
 };
 
-const omdb = new Omdb();
-
-export const handleSearch = createAsyncThunk("movie/handleSearch", async () => {
-  const data = await omdb.searchMovies("test");
-  return data;
-});
+export const handleSearch = createAsyncThunk(
+  "movie/handleSearch",
+  async (searchText: string) => {
+    const omdb = new Omdb();
+    const data = await omdb.searchMovies(searchText);
+    return data;
+  }
+);
 
 export const movieSlice = createSlice({
   name: "movie",
