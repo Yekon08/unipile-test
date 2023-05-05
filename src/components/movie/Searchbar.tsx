@@ -1,4 +1,4 @@
-import { Box, TextField, InputAdornment } from "@mui/material";
+import { Box, TextField, InputAdornment, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { SyntheticEvent, useState } from "react";
 import { useAppDispatch } from "../../hooks";
@@ -26,7 +26,9 @@ const Searchbar = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <SearchIcon />
+                <IconButton type="submit">
+                  <SearchIcon />
+                </IconButton>
               </InputAdornment>
             ),
           }}

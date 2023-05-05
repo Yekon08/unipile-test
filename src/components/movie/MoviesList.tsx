@@ -7,9 +7,6 @@ const MoviesList = () => {
   const errorMsg = useAppSelector((state) => state.movie.error);
   const loading = useAppSelector((state) => state.movie.loading);
 
-  console.log("movies: ", movies);
-  console.log("error: ", errorMsg);
-
   if (loading) {
     return (
       <Box sx={{ display: "flex", marginTop: "35px" }}>
@@ -27,7 +24,9 @@ const MoviesList = () => {
   }
 
   return (
-    <Box sx={{ marginTop: "35px" }}>
+    <Box
+      sx={{ marginTop: "35px", display: "flex", flexWrap: "wrap", gap: "20px" }}
+    >
       {movies.Search.map((movie) => (
         <MovieCard movie={movie} />
       ))}

@@ -34,7 +34,6 @@ export const movieSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(handleSearch.fulfilled, (state, action) => {
-      console.log("test: ", action);
       state.loading = false;
       state.searchMovies = action.payload;
       state.error = action.payload.Error;
