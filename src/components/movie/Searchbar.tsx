@@ -22,7 +22,7 @@ const Searchbar = () => {
           label="Search"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          sx={{ width: 600 }}
+          sx={{ width: { xs: "100%", sm: "600px" } }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

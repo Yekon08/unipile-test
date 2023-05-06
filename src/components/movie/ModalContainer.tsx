@@ -75,13 +75,15 @@ const ModalContainer = () => {
       }}
     >
       <Box sx={style}>
-        <Box sx={{ display: "flex" }}>
+        <Box
+          sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" } }}
+        >
           <img
             src={data.Poster}
             alt={`${data.Title} poster`}
             style={{ width: "200px", height: "auto%", borderRadius: "4px" }}
           />
-          <Box sx={{ marginLeft: "20px" }}>
+          <Box sx={{ marginLeft: "20px", marginTop: { xs: "20px", sm: "0" } }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="h5">{data.Title}</Typography>{" "}
               <IconButton
