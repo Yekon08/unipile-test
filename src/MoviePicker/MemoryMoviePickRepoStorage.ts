@@ -28,10 +28,10 @@ export class MemoryMoviePickRepoStorage implements MoviePickRepo {
    *
    */
   async getAll() {
-    const data: Map<string, string> | unknown | any = JSON.parse(
+    const data: Map<string, string> = JSON.parse(
       localStorage.getItem("moviePicks") as string,
       reviver
-    );
+    ) as Map<string, string>;
     return [...data.values()];
   }
 
@@ -45,10 +45,10 @@ export class MemoryMoviePickRepoStorage implements MoviePickRepo {
         data.set([...title][0].toUpperCase(), title);
         localStorage.setItem("moviePicks", JSON.stringify(data, replacer));
       } else {
-        const data: Map<string, string> | unknown | any = JSON.parse(
+        const data: Map<string, string> = JSON.parse(
           localStorage.getItem("moviePicks") as string,
           reviver
-        );
+        ) as Map<string, string>;
         data.set([...title][0].toUpperCase(), title);
         localStorage.setItem("moviePicks", JSON.stringify(data, replacer));
       }

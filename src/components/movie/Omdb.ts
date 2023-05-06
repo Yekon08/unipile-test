@@ -3,16 +3,14 @@ import { SearchMoviesInterface } from "../../interfaces/store";
 
 export class Omdb {
   async searchMovies(movie: string) {
-    const fetchData = async (
-      movie: string
-    ): Promise<SearchMoviesInterface | unknown> => {
+    const fetchData = async (movie: string): Promise<SearchMoviesInterface> => {
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=23aaa32&s=${movie}`
       );
       if (!response.ok) {
         throw new Error("Data coud not be fetched!");
       } else {
-        return response.json();
+        return response.json() as Promise<SearchMoviesInterface>;
       }
     };
 
@@ -21,16 +19,14 @@ export class Omdb {
   }
 
   async searchMovieId(id: string) {
-    const fetchData = async (
-      id: string
-    ): Promise<MovieDetailsInterface | unknown> => {
+    const fetchData = async (id: string): Promise<MovieDetailsInterface> => {
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=23aaa32&i=${id}`
       );
       if (!response.ok) {
         throw new Error("Data coud not be fetched!");
       } else {
-        return response.json();
+        return response.json() as Promise<MovieDetailsInterface>;
       }
     };
 

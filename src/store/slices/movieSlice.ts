@@ -1,11 +1,11 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { movieReducer } from "../reducers/movieReducer";
 import { Omdb } from "../../components/movie/Omdb";
 import {
   GlobalStateInterface,
   SearchMoviesInterface,
 } from "../../interfaces/store";
-import { MovieDetailsInterface, MovieInterface } from "../../interfaces/movies";
+import { MovieDetailsInterface } from "../../interfaces/movies";
 import { MemoryMoviePickRepoStorage } from "../../MoviePicker/MemoryMoviePickRepoStorage";
 
 export const initialState: GlobalStateInterface = {
@@ -45,7 +45,7 @@ export const handleSearchId = createAsyncThunk<MovieDetailsInterface, string>(
 
 const moviePick = new MemoryMoviePickRepoStorage();
 
-export const handleMoviePicks = createAsyncThunk<unknown, string>(
+export const handleMoviePicks = createAsyncThunk<string[], string>(
   "movie/handleMoviePicks",
   async (title: string) => {
     await moviePick.put(title);
