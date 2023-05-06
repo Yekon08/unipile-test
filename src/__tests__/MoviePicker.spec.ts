@@ -55,7 +55,7 @@ describe("MoviePicker", () => {
       }).rejects.toThrow(MoviePickAlreadyExistError);
     }
   );
-  // //----------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   it(
     "should throw EmptyMovieTitleError " +
       "on MoviePicker.pick " +

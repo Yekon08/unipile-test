@@ -2,7 +2,7 @@ import { Box, TextField, InputAdornment, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { SyntheticEvent, useState } from "react";
 import { useAppDispatch } from "../../hooks";
-import { handleSearch } from "../../store/slices/movieSlice";
+import { handleSearch } from "../../store/movieThunk";
 
 const Searchbar = () => {
   const [searchText, setSearchText] = useState<string>("");

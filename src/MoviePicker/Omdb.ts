@@ -1,5 +1,5 @@
-import { MovieDetailsInterface, MovieInterface } from "../../interfaces/movies";
-import { SearchMoviesInterface } from "../../interfaces/store";
+import { MovieDetailsInterface, MovieInterface } from "../interfaces/movies";
+import { SearchMoviesInterface } from "../interfaces/store";
 
 export class Omdb {
   async searchMovies(movie: string) {

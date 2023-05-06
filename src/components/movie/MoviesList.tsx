@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Modal, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useAppSelector } from "../../hooks";
 import MovieCard from "./MovieCard";
 import ModalContainer from "./ModalContainer";
@@ -7,7 +7,6 @@ const MoviesList = () => {
   const movies = useAppSelector((state) => state.movie.searchMovies);
   const errorMsg = useAppSelector((state) => state.movie.error);
   const loading = useAppSelector((state) => state.movie.loading);
-  const moviePicks = useAppSelector((state) => state.movie.moviePicks);
 
   if (loading) {
     return (

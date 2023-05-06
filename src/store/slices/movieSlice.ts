@@ -1,13 +1,13 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { movieReducer } from "../reducers/movieReducer";
-import { Omdb } from "../../components/movie/Omdb";
-import {
-  GlobalStateInterface,
-  SearchMoviesInterface,
-} from "../../interfaces/store";
+import { GlobalStateInterface } from "../../interfaces/store";
 import { MovieDetailsInterface } from "../../interfaces/movies";
-import { MemoryMoviePickRepoStorage } from "../../MoviePicker/MemoryMoviePickRepoStorage";
-import { MoviePicker } from "../../MoviePicker/MoviePicker";
+import {
+  handleSearch,
+  handleSearchId,
+  handleMoviePicks,
+  handleMoviePicksState,
+} from "../movieThunk";
 
 export const initialState: GlobalStateInterface = {
   loading: false,
@@ -25,45 +25,6 @@ export const initialState: GlobalStateInterface = {
   moviePicks: [],
   moviePicksError: "",
 };
-
-export const handleSearch = createAsyncThunk<SearchMoviesInterface, string>(
-  "movie/handleSearch",
-  async (searchText: string) => {
-    const omdb = new Omdb();
-    const data = await omdb.searchMovies(searchText);
-    return data;
-  }
-);
-
-export const handleSearchId = createAsyncThunk<MovieDetailsInterface, string>(
-  "movie/handleSearchId",
-  async (id: string) => {
-    //TODO?: find a best way to initialize class ?
-    const omdb = new Omdb();
-    const data = await omdb.searchMovieId(id);
-    return data;
-  }
-);
-
-export const handleMoviePicks = createAsyncThunk<string[], string>(
-  "movie/handleMoviePicks",
-  async (title: string) => {
-    const moviePickRepo = new MemoryMoviePickRepoStorage();
-    const moviePick = new MoviePicker(moviePickRepo);
-    await moviePick.pick(title);
-    const data = await moviePickRepo.getAll();
-    return data;
-  }
-);
-
-export const handleMoviePicksState = createAsyncThunk(
-  "movie/handleMoviePicksState",
-  async () => {
-    const moviePickRepo = new MemoryMoviePickRepoStorage();
-    const data = await moviePickRepo.getAll();
-    return data;
-  }
-);
 
 export const movieSlice = createSlice({
   name: "movie",
@@ -87,6 +48,7 @@ export const movieSlice = createSlice({
       };
       state.error = action.error.message;
     });
+
     builder.addCase(handleSearchId.pending, (state) => {
       state.modalLoading = true;
     });

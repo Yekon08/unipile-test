@@ -7,15 +7,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import {
-  clearPicksError,
-  handleMoviePicks,
-  handleSearchId,
-  setModalStatus,
-} from "../../store/slices/movieSlice";
+import { clearPicksError, setModalStatus } from "../../store/slices/movieSlice";
 import { useEffect } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { handleSearchId, handleMoviePicks } from "../../store/movieThunk";
 
 const style = {
   position: "absolute" as "absolute",
@@ -104,30 +100,17 @@ const ModalContainer = () => {
                 {errorMsgPicks}
               </Typography>
             )}
-            <Typography variant="body1">{data.Director}</Typography>
             <Typography variant="body1">{data.Actors}</Typography>
-            <Typography variant="body2">{data.Released}</Typography>
-            <Typography variant="body2">{data.Runtime}</Typography>
-            <Typography variant="body2">{data.Genre}</Typography>
-            <Typography variant="body2">{data.Language}</Typography>
-            <Typography variant="body2">{data.Rated}</Typography>
-            <Typography variant="body2">
-              Metascore : {data.Metascore}
+            <Typography variant="body2">{data.Year}</Typography>
+            <Typography variant="body2">{data.Type}</Typography>
+            <Typography variant="body1" sx={{ marginTop: "20px" }}>
+              Resume :
             </Typography>
-            <Typography variant="body2">{data.BoxOffice}</Typography>
-            <Typography variant="body2">
-              Box office : {data.BoxOffice}
+            <Typography variant="caption" sx={{ marginTop: "20px" }}>
+              {data.Plot}
             </Typography>
-            <Typography variant="body2">DVD: {data.DVD}</Typography>
           </Box>
         </Box>
-
-        <Typography variant="body1" sx={{ marginTop: "20px" }}>
-          Resume :
-        </Typography>
-        <Typography variant="caption" sx={{ marginTop: "20px" }}>
-          {data.Plot}
-        </Typography>
       </Box>
     </Modal>
   );
