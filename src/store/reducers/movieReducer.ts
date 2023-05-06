@@ -11,4 +11,7 @@ export const movieReducer = {
   setModalId: (state: GlobalStateInterface, action: PayloadAction<string>) => {
     state.modalId = action.payload;
   },
+  clearPicksError: (state: GlobalStateInterface) => {
+    state.moviePicksError = "";
+  },
 };

@@ -2,7 +2,6 @@ import { Box, CircularProgress, Modal, Typography } from "@mui/material";
 import { useAppSelector } from "../../hooks";
 import MovieCard from "./MovieCard";
 import ModalContainer from "./ModalContainer";
-import { MemoryMoviePickRepoStorage } from "../../MoviePicker/MemoryMoviePickRepoStorage";
 
 const MoviesList = () => {
   const movies = useAppSelector((state) => state.movie.searchMovies);
@@ -26,8 +25,6 @@ const MoviesList = () => {
     );
   }
 
-  console.log("movie picks : ", moviePicks);
-
   return (
     <>
       <Box
@@ -39,10 +36,6 @@ const MoviesList = () => {
           justifyContent: "center",
         }}
       >
-        {moviePicks.length > 0 &&
-          moviePicks.map((movie: string) => (
-            <Typography variant="body1">{movie}</Typography>
-          ))}
         {movies.Search.map((movie) => (
           <MovieCard key={movie.imdbID} movie={movie} />
         ))}

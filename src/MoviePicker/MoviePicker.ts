@@ -7,14 +7,14 @@ import { MoviePickRepo } from "./MoviePickRepo";
 export class MoviePickAlreadyExistError extends Error {
   constructor(err: string) {
     super(err);
-    console.log("err: ", err);
+    console.log(err);
   }
 }
 
 export class EmptyMovieTitleError extends Error {
   constructor(err: string) {
     super(err);
-    console.log("empty Movie Title: ", err);
+    console.log(err);
   }
 }
 
@@ -35,7 +35,9 @@ export class MoviePicker {
     }
 
     if (title.length > 0 && alreadyExist !== null) {
-      throw new MoviePickAlreadyExistError("This letter has already a pick");
+      throw new MoviePickAlreadyExistError(
+        "This letter has already a favorite movie selected"
+      );
     }
 
     if (title.length > 0 && alreadyExist === null) {

@@ -17,4 +17,5 @@ export interface GlobalStateInterface {
   modalLoading: boolean;
   movieData: MovieDetailsInterface;
   moviePicks: string[];
+  moviePicksError: string;
 }

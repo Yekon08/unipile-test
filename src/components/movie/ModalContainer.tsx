@@ -2,16 +2,20 @@ import {
   Box,
   Button,
   CircularProgress,
+  IconButton,
   Modal,
   Typography,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
+  clearPicksError,
   handleMoviePicks,
   handleSearchId,
   setModalStatus,
 } from "../../store/slices/movieSlice";
 import { useEffect } from "react";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
 const style = {
   position: "absolute" as "absolute",
@@ -30,6 +34,8 @@ const ModalContainer = () => {
   const data = useAppSelector((state) => state.movie.movieData);
   const loading = useAppSelector((state) => state.movie.modalLoading);
   const errorMsg = useAppSelector((state) => state.movie.modalError);
+  const errorMsgPicks = useAppSelector((state) => state.movie.moviePicksError);
+  const moviePicks = useAppSelector((state) => state.movie.moviePicks);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -62,11 +68,14 @@ const ModalContainer = () => {
     dispatch(handleMoviePicks(title));
   };
 
+  const isFavorite = moviePicks.includes(data.Title);
+
   return (
     <Modal
       open={modal}
       onClose={() => {
         dispatch(setModalStatus(false));
+        dispatch(clearPicksError());
       }}
     >
       <Box sx={style}>
@@ -77,7 +86,24 @@ const ModalContainer = () => {
             style={{ width: "200px", height: "auto%", borderRadius: "4px" }}
           />
           <Box sx={{ marginLeft: "20px" }}>
-            <Typography variant="h5">{data.Title}</Typography>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="h5">{data.Title}</Typography>{" "}
+              <IconButton
+                onClick={() => handlePick(data.Title)}
+                sx={{ marginLeft: "10px", marginTop: "-4px" }}
+              >
+                {isFavorite ? (
+                  <FavoriteIcon color="primary" />
+                ) : (
+                  <FavoriteBorderOutlinedIcon />
+                )}
+              </IconButton>
+            </Box>
+            {errorMsgPicks && (
+              <Typography variant="caption" color="error.main">
+                {errorMsgPicks}
+              </Typography>
+            )}
             <Typography variant="body1">{data.Director}</Typography>
             <Typography variant="body1">{data.Actors}</Typography>
             <Typography variant="body2">{data.Released}</Typography>
@@ -102,7 +128,6 @@ const ModalContainer = () => {
         <Typography variant="caption" sx={{ marginTop: "20px" }}>
           {data.Plot}
         </Typography>
-        <Button onClick={() => handlePick(data.Title)}>test</Button>
       </Box>
     </Modal>
   );

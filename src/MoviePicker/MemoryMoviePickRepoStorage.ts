@@ -8,11 +8,6 @@ export class MemoryMoviePickRepoStorage implements MoviePickRepo {
   /**
    *
    */
-  private readonly byFirstLetter = new Map<string, string>();
-
-  /**
-   *
-   */
   constructor() {
     this.put = this.put.bind(this);
   }
@@ -21,7 +16,16 @@ export class MemoryMoviePickRepoStorage implements MoviePickRepo {
    *
    */
   async getByFirstLetter(firstLetter: string) {
-    return this.byFirstLetter.get(firstLetter.toUpperCase()) ?? null;
+    const data: Map<string, string> = JSON.parse(
+      localStorage.getItem("moviePicks") as string,
+      reviver
+    ) as Map<string, string>;
+
+    if (data === null) {
+      return null;
+    }
+
+    return data.get(firstLetter.toUpperCase()) ?? null;
   }
 
   /**

@@ -1,14 +1,9 @@
 import { Container, Typography } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { handleSearch } from "../../store/slices/movieSlice";
 import Searchbar from "./Searchbar";
-import { useState } from "react";
 import MoviesList from "./MoviesList";
+import MoviePicks from "./MoviePicks";
 
 const MovieContainer = () => {
-  const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.movie.loading);
-
   return (
     <Container
       maxWidth="lg"
@@ -25,6 +20,8 @@ const MovieContainer = () => {
       <Typography variant="h3">Search for movies...</Typography>
 
       <Searchbar />
+
+      <MoviePicks />
 
       <MoviesList />
     </Container>

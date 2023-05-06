@@ -7,6 +7,7 @@ import {
 } from "../../interfaces/store";
 import { MovieDetailsInterface } from "../../interfaces/movies";
 import { MemoryMoviePickRepoStorage } from "../../MoviePicker/MemoryMoviePickRepoStorage";
+import { MoviePicker } from "../../MoviePicker/MoviePicker";
 
 export const initialState: GlobalStateInterface = {
   loading: false,
@@ -22,6 +23,7 @@ export const initialState: GlobalStateInterface = {
   modalLoading: false,
   movieData: {} as MovieDetailsInterface,
   moviePicks: [],
+  moviePicksError: "",
 };
 
 export const handleSearch = createAsyncThunk<SearchMoviesInterface, string>(
@@ -43,13 +45,22 @@ export const handleSearchId = createAsyncThunk<MovieDetailsInterface, string>(
   }
 );
 
-const moviePick = new MemoryMoviePickRepoStorage();
-
 export const handleMoviePicks = createAsyncThunk<string[], string>(
   "movie/handleMoviePicks",
   async (title: string) => {
-    await moviePick.put(title);
-    const data = await moviePick.getAll();
+    const moviePickRepo = new MemoryMoviePickRepoStorage();
+    const moviePick = new MoviePicker(moviePickRepo);
+    await moviePick.pick(title);
+    const data = await moviePickRepo.getAll();
+    return data;
+  }
+);
+
+export const handleMoviePicksState = createAsyncThunk(
+  "movie/handleMoviePicksState",
+  async () => {
+    const moviePickRepo = new MemoryMoviePickRepoStorage();
+    const data = await moviePickRepo.getAll();
     return data;
   }
 );
@@ -90,20 +101,18 @@ export const movieSlice = createSlice({
       state.error = action.error.message;
     });
 
-    builder.addCase(handleMoviePicks.pending, (state) => {
-      // state.modalLoading = true;
-    });
     builder.addCase(handleMoviePicks.fulfilled, (state, action) => {
-      // state.modalLoading = false;
       state.moviePicks = action.payload;
-      // state.error = action.payload.Error;
     });
     builder.addCase(handleMoviePicks.rejected, (state, action) => {
-      // state.modalLoading = false;
-      // state.movieData = {} as MovieDetailsInterface;
-      // state.error = action.error.message;
+      state.moviePicksError = action.error.message as string;
+    });
+
+    builder.addCase(handleMoviePicksState.fulfilled, (state, action) => {
+      state.moviePicks = action.payload;
     });
   },
 });
 
-export const { setModalStatus, setModalId } = movieSlice.actions;
+export const { setModalStatus, setModalId, clearPicksError } =
+  movieSlice.actions;
