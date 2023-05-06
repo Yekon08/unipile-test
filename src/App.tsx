@@ -1,7 +1,11 @@
-import { Typography } from "@mui/material";
+import MovieContainer from "./components/movie/MovieContainer";
 
-function App() {
-  return <Typography variant="h1">Hello World !</Typography>;
-}
+const App = () => {
+  return (
+    <>
+      <MovieContainer />
+    </>
+  );
+};
 
 export default App;
