@@ -5,7 +5,7 @@ export class Omdb {
   async searchMovies(movie: string) {
     const fetchData = async (movie: string): Promise<SearchMoviesInterface> => {
       const response = await fetch(
-        `http://www.omdbapi.com/?apikey=${
+        `https://www.omdbapi.com/?apikey=${
           import.meta.env.VITE_API_KEY
         }&s=${movie}`
       );
@@ -23,7 +23,9 @@ export class Omdb {
   async searchMovieId(id: string) {
     const fetchData = async (id: string): Promise<MovieDetailsInterface> => {
       const response = await fetch(
-        `http://www.omdbapi.com/?apikey=${import.meta.env.VITE_API_KEY}&i=${id}`
+        `https://www.omdbapi.com/?apikey=${
+          import.meta.env.VITE_API_KEY
+        }&i=${id}`
       );
       if (!response.ok) {
         throw new Error("Data coud not be fetched!");
