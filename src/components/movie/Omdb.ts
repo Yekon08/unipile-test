@@ -5,7 +5,7 @@ export class Omdb {
   async searchMovies(movie: string) {
     const fetchData = async (
       movie: string
-    ): Promise<SearchMoviesInterface | any> => {
+    ): Promise<SearchMoviesInterface | unknown> => {
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=23aaa32&s=${movie}`
       );
@@ -23,7 +23,7 @@ export class Omdb {
   async searchMovieId(id: string) {
     const fetchData = async (
       id: string
-    ): Promise<MovieDetailsInterface | any> => {
+    ): Promise<MovieDetailsInterface | unknown> => {
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=23aaa32&i=${id}`
       );

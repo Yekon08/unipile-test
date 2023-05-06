@@ -16,4 +16,5 @@ export interface GlobalStateInterface {
   modalError: string | undefined;
   modalLoading: boolean;
   movieData: MovieDetailsInterface;
+  moviePicks: string[];
 }

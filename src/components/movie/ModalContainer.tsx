@@ -1,6 +1,16 @@
-import { Box, CircularProgress, Modal, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Modal,
+  Typography,
+} from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { handleSearchId, setModalStatus } from "../../store/slices/movieSlice";
+import {
+  handleMoviePicks,
+  handleSearchId,
+  setModalStatus,
+} from "../../store/slices/movieSlice";
 import { useEffect } from "react";
 
 const style = {
@@ -11,6 +21,7 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 20,
   p: 4,
+  borderRadius: "4px",
 };
 
 const ModalContainer = () => {
@@ -46,6 +57,10 @@ const ModalContainer = () => {
       </Box>
     );
   }
+
+  const handlePick = (title: string) => {
+    dispatch(handleMoviePicks(title));
+  };
 
   return (
     <Modal
@@ -87,6 +102,7 @@ const ModalContainer = () => {
         <Typography variant="caption" sx={{ marginTop: "20px" }}>
           {data.Plot}
         </Typography>
+        <Button onClick={() => handlePick(data.Title)}>test</Button>
       </Box>
     </Modal>
   );

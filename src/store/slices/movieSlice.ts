@@ -6,6 +6,7 @@ import {
   SearchMoviesInterface,
 } from "../../interfaces/store";
 import { MovieDetailsInterface, MovieInterface } from "../../interfaces/movies";
+import { MemoryMoviePickRepoStorage } from "../../MoviePicker/MemoryMoviePickRepoStorage";
 
 export const initialState: GlobalStateInterface = {
   loading: false,
@@ -20,6 +21,7 @@ export const initialState: GlobalStateInterface = {
   modalError: "",
   modalLoading: false,
   movieData: {} as MovieDetailsInterface,
+  moviePicks: [],
 };
 
 export const handleSearch = createAsyncThunk<SearchMoviesInterface, string>(
@@ -34,8 +36,20 @@ export const handleSearch = createAsyncThunk<SearchMoviesInterface, string>(
 export const handleSearchId = createAsyncThunk<MovieDetailsInterface, string>(
   "movie/handleSearchId",
   async (id: string) => {
+    //TODO?: find a best way to initialize class ?
     const omdb = new Omdb();
     const data = await omdb.searchMovieId(id);
+    return data;
+  }
+);
+
+const moviePick = new MemoryMoviePickRepoStorage();
+
+export const handleMoviePicks = createAsyncThunk<unknown, string>(
+  "movie/handleMoviePicks",
+  async (title: string) => {
+    await moviePick.put(title);
+    const data = await moviePick.getAll();
     return data;
   }
 );
@@ -74,6 +88,20 @@ export const movieSlice = createSlice({
       state.modalLoading = false;
       state.movieData = {} as MovieDetailsInterface;
       state.error = action.error.message;
+    });
+
+    builder.addCase(handleMoviePicks.pending, (state) => {
+      // state.modalLoading = true;
+    });
+    builder.addCase(handleMoviePicks.fulfilled, (state, action) => {
+      // state.modalLoading = false;
+      state.moviePicks = action.payload;
+      // state.error = action.payload.Error;
+    });
+    builder.addCase(handleMoviePicks.rejected, (state, action) => {
+      // state.modalLoading = false;
+      // state.movieData = {} as MovieDetailsInterface;
+      // state.error = action.error.message;
     });
   },
 });
