@@ -4,6 +4,10 @@
 
 import { MoviePickRepo } from "./MoviePickRepo";
 
+interface moviePickerInterface {
+  pick: (title: string) => Promise<void>;
+}
+
 export class MoviePickAlreadyExistError extends Error {
   constructor(err: string) {
     super(err);
@@ -18,7 +22,7 @@ export class EmptyMovieTitleError extends Error {
   }
 }
 
-export class MoviePicker {
+export class MoviePicker implements moviePickerInterface {
   moviePickRepo: MoviePickRepo;
 
   constructor(moviePickRepo: MoviePickRepo) {
